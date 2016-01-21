@@ -9,33 +9,47 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    static let NUM_ROWS = 3
+    static let NUM_COLUMNS = 3
+    
+    var tiles: [[Tile]] = [[Tile]]()
+
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!"
-        myLabel.fontSize = 45
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+        self.size = view.bounds.size
         
-        self.addChild(myLabel)
+        // set up tiles Array
+        print("\(self.size.height)")
+        for var column = 0; column < GameScene.NUM_COLUMNS; column++ {
+            let tileRow = [Tile]()
+            tiles.append(tileRow)
+            for var row = 0; row < GameScene.NUM_ROWS; row++ {
+                tiles[column].append(Tile(column: column, row: row, direction: .Up))
+                let xCoord = CGFloat(row) * self.size.width / 3.0 + 60.0
+                let yCoord = CGFloat(column) * self.size.height / 3.0 + 60.0
+                let position = CGPointMake(xCoord, yCoord)
+                
+                let tileSprite = tiles[column][row].sprite!
+                
+                // name = row, column to identify sprite at specific location
+                tileSprite.name = String(row) + "," + String(column)
+                
+                tileSprite.size = CGSizeMake(CGFloat(50.0), CGFloat(50.0))
+                tileSprite.position = position
+                // add sprite
+                self.addChild(tileSprite)
+                print("added \(column) \(row) at \(position)")
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let position = touch.locationInView(self.view)
+            let touchedSprite = self.nodeAtPoint(position)
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            print(touchedSprite.name)
         }
     }
    

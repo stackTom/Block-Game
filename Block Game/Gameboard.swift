@@ -28,8 +28,9 @@ class Gameboard {
         // Adjust tileSprite size to fit into board depending on number of tiles
         let spriteHeight = boardHeight / CGFloat(columns)
         let spriteWidth = boardWidth / CGFloat(rows)
-        print("Tile Height: \(spriteHeight)")
-        print("Tile Width: \(spriteWidth)")
+        print("Space Height: \(spriteHeight)")
+        print("Space Width: \(spriteWidth)")
+        
         
         // initialize coordinates for center of each tile in board in CGFloat type
         var xCoord: CGFloat = CGFloat(0.0)
@@ -77,7 +78,7 @@ class Gameboard {
                     // name = row, column to identify sprite at specific location
                     tileSprite.name = String(row) + ", " + String(column)
                     
-                    tileSprite.size = CGSizeMake(CGFloat(20.0), CGFloat(20.0))
+                    tileSprite.size = CGSizeMake(spriteHeight, spriteWidth)
                     tileSprite.position = position
                     
                     // add sprite

@@ -39,8 +39,14 @@ class GameScene: SKScene {
             let convertedPosition = self.convertPointFromView(position)
             let touchedSprite = self.nodeAtPoint(convertedPosition)
             
+            // find the tile we are touching, if it is a rotatable tile
+            //self.gameBoard.tileNameToTile[touchedSprite.name!] = RotatableTile(column: 0, row: 1, direction: .Up)
+            
+            if let tile = self.gameBoard.tileNameToTile[touchedSprite.name!] as? RotatableTile {
+                print(tile)
+            }
             // print row and column numbers of tile
-            print(touchedSprite.name )
+            //print(touchedSprite.name )
         }
     }
     

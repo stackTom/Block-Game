@@ -15,6 +15,8 @@ import SpriteKit
 class Gameboard {
     
     var tiles: [[Tile]] = [[Tile]]()
+    var tileNameToTile = [String: Tile]()
+    
     init(rows: Int, columns: Int, gameScene: GameScene) {
         
         // Bottom (y = 0) so put board start at top
@@ -57,7 +59,8 @@ class Gameboard {
             
             for var row = 0; row < rows; row++ {
                 // add a new tile to specific row, column
-                tiles[column].append(Tile(column: column, row: row, direction: .Up))
+                let newTile = Tile(column: column, row: row, direction: .Up)
+                tiles[column].append(newTile)
                 
                 // initialize or update value of xCoor 
                 // since we start at left of screen, to populate tiles to the right, increment by spriteWidth
@@ -76,7 +79,9 @@ class Gameboard {
                 
                 if let tileSprite = tiles[column][row].sprite {
                     // name = row, column to identify sprite at specific location
-                    tileSprite.name = String(row) + ", " + String(column)
+                    let tileName = String(column) + ", " + String(row)
+                    self.tileNameToTile[tileName] = newTile
+                    tileSprite.name = tileName
                     
                     tileSprite.size = CGSizeMake(spriteWidth, spriteHeight)
                     tileSprite.position = position
@@ -88,5 +93,6 @@ class Gameboard {
             }
         }
         tiles[0][1] = RotatableTile(column: 0, row: 1, direction: .Up)
+        
     }
 }

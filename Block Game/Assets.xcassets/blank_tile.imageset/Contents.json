@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "blank_tile.png",
+      "filename" : "blank_tile2.png",
       "scale" : "1x"
     },
     {
@@ -11,6 +11,7 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "blank_tile.png",
       "scale" : "3x"
     }
   ],

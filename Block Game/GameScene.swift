@@ -39,8 +39,8 @@ class GameScene: SKScene {
             let convertedPosition = self.convertPointFromView(position)
             let touchedSprite = self.nodeAtPoint(convertedPosition)
             
-            
-            print(touchedSprite.name)
+            // print row and column numbers of tile
+            print(touchedSprite.name )
         }
     }
     

@@ -9,33 +9,68 @@
 import Foundation
 import SpriteKit
 
+// Tried printing out board height, width versus spriteHeight, width to figure it out 
+// problem with tile size but the ratio is good...something with code implementation
+// or tile size is too small?
 class Gameboard {
-    var tiles: [[Tile]] = [[Tile]]()
     
+    var tiles: [[Tile]] = [[Tile]]()
     init(rows: Int, columns: Int, gameScene: GameScene) {
-        // set up tiles Array
+        
+        // Bottom (y = 0) so put board start at top
+        let boardHeight = gameScene.size.height
+        print("Board Height: \(boardHeight)")
+        
+        // Left (x = 0) so put board start at left
+        let boardWidth =  gameScene.size.width
+        print("Board Width: \(boardWidth)")
+        
+        // Adjust tileSprite size to fit into board depending on number of tiles
+        let spriteHeight = boardHeight / CGFloat(columns)
+        let spriteWidth = boardWidth / CGFloat(rows)
+        print("Tile Height: \(spriteHeight)")
+        print("Tile Width: \(spriteWidth)")
+        
+        // initialize coordinates for center of each tile in board in CGFloat type
+        var xCoord: CGFloat = CGFloat(0.0)
+        var yCoord: CGFloat = CGFloat(0.0)
+        
+        // coordinates for center of each tile in double to be converted to CGFloat
+        // 0, 0 is bottom left so x = 0, y = boardHeight = top left
+        // increment x a little to the right and decrement y a little downwards
+        let xDouble = 20.0
+        let yDouble = boardHeight - 20.0
+        
+        // set up tiles Array a.k.a. game board
         for var column = 0; column < columns; column++ {
             let tileRow = [Tile]()
             tiles.append(tileRow)
+            
+            // initialize or update value of yCoor 
+            // since we start at top of screen, to populate tiles downwards, decrement by spriteHeight
+            if column == 0 {
+                yCoord = CGFloat(yDouble)
+            } else {
+                yCoord -= spriteHeight
+            }
+            
             for var row = 0; row < rows; row++ {
+                // add a new tile to specific row, column
                 tiles[column].append(Tile(column: column, row: row, direction: .Up))
-                var xCoord: CGFloat = CGFloat(0.0)
-                var yCoord: CGFloat = CGFloat(0.0)
                 
+                // initialize or update value of xCoor 
+                // since we start at left of screen, to populate tiles to the right, increment by spriteWidth
                 if row == 0 {
-                    xCoord = gameScene.size.width / 6.0 + 10.0
-                    
-                    if column == 0 {
-                        yCoord = gameScene.size.height / 3.0 + 60.0
-                    } else {
-                        if let tileSprite = tiles[column - 1][row].sprite {
-                            yCoord = tileSprite.position.y + tileSprite.size.height
-                        }
-                    }
+                    xCoord = CGFloat(xDouble)
                 } else {
-                    xCoord = tiles[column][row - 1].sprite!.position.x + tiles[column][row - 1].sprite!.size.width
-                    yCoord = tiles[column][row - 1].sprite!.position.y
+                    // for some reason this spacing is bigger than the actual sprite image so it 
+                    // causes empty nil space between the tiles...
+                    xCoord += spriteWidth
+                    
+                    // this works but can't be guaranteed for all iPhones
+                    // xCoord += 20.0
                 }
+                
                 let position = CGPointMake(xCoord, yCoord)
                 
                 if let tileSprite = tiles[column][row].sprite {

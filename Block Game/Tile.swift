@@ -41,27 +41,26 @@ class Tile: CustomStringConvertible {
     // Properties of a tile
     var column: Int
     var row: Int
-    var direction: TileDirection
+    
     var sprite: SKSpriteNode?
-    var tileTypeToImg = ["right_tile", "down_tile", "left_tile", "up_tile"]
+    
     
     // shortens retrieval of name from tile.direction.spriteName to tile.spriteName
     var spriteName: String {
-        return direction.spriteName
+        return "blank tile"
     }
 
     // return description of tile: direction, column, row
     var description: String {
-        return "\(direction): [\(column), \(row)]"
+        return "blank tile: [\(column), \(row)]"
     }
     
     // initialize tile, default direction is Right = 0 and cannot rotate
-    init(column:Int, row:Int, direction: TileDirection = .Right) {
+    init(column:Int, row:Int) {
         self.column = column
         self.row = row
-        self.direction = direction
         
-        self.sprite = SKSpriteNode(imageNamed: "up_tile")
+        self.sprite = SKSpriteNode(imageNamed: "blank_tile")
     }
     
     // I initialize direction to up, but if user taps rotatable tile, it needs
@@ -83,7 +82,23 @@ class Tile: CustomStringConvertible {
     // So if default direction is .Right, one tap turns tile to .Down direction
 }
 
-class RotatableTile: Tile {
+class ArrowTile: Tile {
+    var direction: TileDirection
+    var tileTypeToImg = ["right_tile", "down_tile", "left_tile", "up_tile"]
+    
+    // init to up arrow by default
+    init(column: Int, row: Int, direction: TileDirection) {
+        self.direction = direction
+        super.init(column: column, row: row)
+        self.sprite = SKSpriteNode(imageNamed: self.tileTypeToImg[self.direction.rawValue])
+    }
+    
+    override var description: String {
+        return "\(self.direction): [\(column), \(row)]"
+    }
+}
+
+class RotatableTile: ArrowTile {
     
     // rotate right by 90 degrees
     func rotate() {

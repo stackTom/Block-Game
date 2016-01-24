@@ -8,7 +8,8 @@
 
 import SpriteKit
 
-// TODO: need a way to determine if a sprite was touched or not. we could use a dictionary with key = name of tile, and value is the tile object itself.
+// TODO: need a way to determine if a sprite was touched or not. 
+// we could use a dictionary with key = name of tile, and value is the tile object itself.
 class GameScene: SKScene {
     static let NUM_ROWS = 10
     static let NUM_COLUMNS = 10

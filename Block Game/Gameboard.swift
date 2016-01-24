@@ -17,6 +17,8 @@ class Gameboard {
     var tiles: [[Tile]] = [[Tile]]()
     init(rows: Int, columns: Int, gameScene: GameScene) {
         
+        let board_scene_ratio = 0.75
+        
         // Bottom (y = 0) so put board start at top
         let boardHeight = gameScene.size.height
         print("Board Height: \(boardHeight)")
@@ -25,22 +27,29 @@ class Gameboard {
         let boardWidth =  gameScene.size.width
         print("Board Width: \(boardWidth)")
         
-        // Adjust tileSprite size to fit into board depending on number of tiles
-        let spriteHeight = CGFloat(0.75) * boardHeight / CGFloat(columns)
-        let spriteWidth = CGFloat(0.75) * boardWidth / CGFloat(rows)
+        // Adjust tileSprite size to fit into 75% of the board depending on number of tiles
+        let spriteHeight = CGFloat(board_scene_ratio) * boardHeight / CGFloat(columns)
+        let spriteWidth = CGFloat(board_scene_ratio) * boardWidth / CGFloat(rows)
         print("Space Height: \(spriteHeight)")
         print("Space Width: \(spriteWidth)")
         
         
         // initialize coordinates for center of each tile in board in CGFloat type
+        // coordinates for center of each tile in double to be converted to CGFloat
+        // 0, 0 is bottom left so x = 0, y = boardHeight = top left
+        // increment x a little to the right: spriteWidth / 2.0 = center of leftmost tile
+        // and 0.25 / 2 = 12.5% of the tile (center of the left gap caused by the board taking up 75% of scene)
+        let xStart: CGFloat = spriteWidth/CGFloat(2.0) + CGFloat((1.0 - board_scene_ratio)/2.0) * boardWidth
+        let yStart: CGFloat = boardHeight - spriteHeight/CGFloat(2.0) - CGFloat((1.0 - board_scene_ratio)/2.0) * boardHeight
+        
+        // declare xCoord and yCoord vars
         var xCoord: CGFloat = CGFloat(0.0)
         var yCoord: CGFloat = CGFloat(0.0)
         
         // coordinates for center of each tile in double to be converted to CGFloat
         // 0, 0 is bottom left so x = 0, y = boardHeight = top left
-        // increment x a little to the right and decrement y a little downwards
-        let xDouble = spriteWidth/2.0
-        let yDouble = boardHeight - spriteHeight/2.0
+        // increment x a little to the right: spriteWidth / 2.0 = center of leftmost tile
+        // and 0.25 / 2 = 12.5% of the tile (center of the left gap caused by the board taking up 75% of scene)
         
         // set up tiles Array a.k.a. game board
         for var column = 0; column < columns; column++ {
@@ -50,7 +59,7 @@ class Gameboard {
             // initialize or update value of yCoor 
             // since we start at top of screen, to populate tiles downwards, decrement by spriteHeight
             if column == 0 {
-                yCoord = CGFloat(yDouble)
+                yCoord = CGFloat(yStart)
             } else {
                 yCoord -= spriteHeight
             }
@@ -62,7 +71,7 @@ class Gameboard {
                 // initialize or update value of xCoor 
                 // since we start at left of screen, to populate tiles to the right, increment by spriteWidth
                 if row == 0 {
-                    xCoord = CGFloat(xDouble)
+                    xCoord = CGFloat(xStart)
                 } else {
                     // for some reason this spacing is bigger than the actual sprite image so it 
                     // causes empty nil space between the tiles...

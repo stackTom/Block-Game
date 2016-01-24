@@ -60,10 +60,10 @@ class Tile: CustomStringConvertible {
         self.row = row
         self.direction = direction
         
-        self.sprite = SKSpriteNode(imageNamed: "Spaceship")
+        self.sprite = SKSpriteNode(imageNamed: "blank_tile")
     }
     
-    // I initialize direction to right, but if user taps rotatable tile, it needs 
+    // I initialize direction to up, but if user taps rotatable tile, it needs
     // to change direction - rotatable tile subclass
     
     // Make subclasses of rotatable, non-rotatable, and teleporting tiles

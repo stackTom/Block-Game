@@ -15,7 +15,6 @@ import SpriteKit
 class Gameboard {
     
     var tiles: [[Tile]] = [[Tile]]()
-    var tileNameToTile = [String: Tile]()
     
     init(rows: Int, columns: Int, gameScene: GameScene) {
         
@@ -67,10 +66,6 @@ class Gameboard {
             }
             
             for var row = 0; row < rows; row++ {
-                // add a new tile to specific row, column
-                let newTile = Tile(column: column, row: row, direction: .Up)
-                tiles[column].append(newTile)
-                
                 // initialize or update value of xCoor 
                 // since we start at left of screen, to populate tiles to the right, increment by spriteWidth
                 if row == 0 {
@@ -85,23 +80,42 @@ class Gameboard {
                 }
                 
                 let position = CGPointMake(xCoord, yCoord)
+                // add a new tile to specific row, column
+                let newTile = Tile(column: column, row: row, direction: .Up)
+                tiles[column].append(newTile)
+                let newTileSprite = newTile.sprite!
                 
-                if let tileSprite = tiles[column][row].sprite {
-                    // name = row, column to identify sprite at specific location
-                    let tileName = String(column) + ", " + String(row)
-                    self.tileNameToTile[tileName] = newTile
-                    tileSprite.name = tileName
+                
+                // name = row, column to identify sprite at specific location
+                let tileName = String(column) + ", " + String(row)
+                newTileSprite.name = tileName
                     
-                    tileSprite.size = CGSizeMake(spriteWidth, spriteHeight)
-                    tileSprite.position = position
-                    
-                    // add sprite
-                    gameScene.addChild(tileSprite)
-                    print("added \(column) \(row) at \(position)")
-                }
+                newTileSprite.size = CGSizeMake(spriteWidth, spriteHeight)
+                newTileSprite.position = position
+                // add sprite
+                gameScene.addChild(newTileSprite)
+                print("added \(column) \(row) at \(position)")
             }
         }
-        tiles[0][1] = RotatableTile(column: 0, row: 1, direction: .Up)
+        // can be deleted later, this was for testing rotatable tiles
+        tiles[0][0].sprite?.removeFromParent()
+        tiles[0][0] = RotatableTile(column: 0, row: 1, direction: .Up)
+        if let test = tiles[0][0].sprite {
+            test.size = CGSizeMake(spriteWidth, spriteHeight)
+            test.position = CGPointMake(67.275, 616.4)
+            test.name = "0, 0"
+            print("Added \(test.name)")
+            gameScene.addChild(test)
+        }
+    }
+    
+    func tileFromName(tileName: String) -> Tile? {
+        // no way to access character at index in swift see: https://www.reddit.com/r/swift/comments/2bvrh9/getting_a_specific_character_in_a_string/
+        let colIndex = tileName.startIndex.advancedBy(0)
+        let rowIndex = tileName.startIndex.advancedBy(3)
+        let row = Int(String(tileName[rowIndex]))!
+        let column = Int(String(tileName[colIndex]))!
         
+        return tiles[column][row]
     }
 }

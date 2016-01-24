@@ -87,14 +87,11 @@ class RotatableTile: Tile {
     
     // rotate right by 90 degrees
     func rotate() {
-        // old name
-        let name = self.sprite?.name
         // get the new direction and convert it to raw value
         self.direction = TileDirection(rawValue: (self.direction.rawValue + 1) % Tile.NUM_DIRECTIONS)!
-        self.sprite = SKSpriteNode(imageNamed: self.tileTypeToImg[self.direction.rawValue])
-        self.sprite?.name = name
-        print("called rotate \(self.sprite)")
         
+        // set the new texture of the sprite
+        self.sprite?.texture = SKTexture(imageNamed: self.tileTypeToImg[self.direction.rawValue])
     }
 }
 

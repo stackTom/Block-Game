@@ -34,28 +34,29 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         for touch in touches {
             let position = touch.locationInView(self.view)
-            
-            // convert to the coord system of this scene class
-            let convertedPosition = self.convertPointFromView(position)
-            let touchedSprite = self.nodeAtPoint(convertedPosition)
-            
-            // find the tile we are touching, if it is a rotatable tile
-            //self.gameBoard.tileNameToTile[touchedSprite.name!] = RotatableTile(column: 0, row: 1, direction: .Up)
-            
-            if let tile = self.gameBoard.tileNameToTile[touchedSprite.name!] as? RotatableTile {
-                print(tile)
-            }
-            // print row and column numbers of tile
-            //print(touchedSprite.name )
+            self.handleTouches(position)
         }
     }
     
     func didPanOnTiles(gestureRecognizer: UIPanGestureRecognizer) {
         let position = gestureRecognizer.locationInView(self.view)
-        let convertedPosition = self.convertPointFromView(position)
+        self.handleTouches(position)
+    }
+    
+    // handles sprite behavior (i.e. rotation, highlating) based on touch position
+    func handleTouches(locationInView: CGPoint) {
+        // convert to the coord system of this scene class
+        let convertedPosition = self.convertPointFromView(locationInView)
         let touchedSprite = self.nodeAtPoint(convertedPosition)
         
-        print(touchedSprite.name)
+        // find the tile we are touching, if it is a rotatable tile
+        if let touchedSpriteName = touchedSprite.name {
+            if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
+                if let touchedTileRot = touchedTile as? RotatableTile {
+                    touchedTileRot.rotate()
+                }
+            }
+        }
     }
     
     override func update(currentTime: CFTimeInterval) {

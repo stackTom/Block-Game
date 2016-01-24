@@ -77,7 +77,7 @@ class Gameboard {
                     // name = row, column to identify sprite at specific location
                     tileSprite.name = String(row) + ", " + String(column)
                     
-                    tileSprite.size = CGSizeMake(CGFloat(20.0), CGFloat(20.0))
+                    tileSprite.size = CGSizeMake(spriteWidth, spriteHeight)
                     tileSprite.position = position
                     
                     // add sprite

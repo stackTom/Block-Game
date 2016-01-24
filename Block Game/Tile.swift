@@ -55,10 +55,10 @@ class Tile: CustomStringConvertible {
     }
     
     // initialize tile, default direction is Right = 0 and cannot rotate
-    init(column:Int, row:Int, direction: TileDirection) {
+    init(column:Int, row:Int, direction: TileDirection = .Right) {
         self.column = column
         self.row = row
-        self.direction = .Right
+        self.direction = direction
         
         self.sprite = SKSpriteNode(imageNamed: "Spaceship")
     }

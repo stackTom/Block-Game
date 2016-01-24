@@ -65,6 +65,7 @@ class GameScene: SKScene {
                 }
             }
         }
+        tiles[0][1] = RotatableTile(column: 0, row: 1, direction: .Up)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -78,6 +79,11 @@ class GameScene: SKScene {
             
             
             print(touchedSprite.name)
+            
+            let t = tiles[0][1] as! RotatableTile
+            print(t.direction)
+            t.rotate()
+            print(t.direction)
         }
     }
     

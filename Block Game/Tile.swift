@@ -60,7 +60,7 @@ class Tile: CustomStringConvertible {
         self.row = row
         self.direction = direction
         
-        self.sprite = SKSpriteNode(imageNamed: "blank_tile")
+        self.sprite = SKSpriteNode(imageNamed: "up_tile")
     }
     
     // I initialize direction to up, but if user taps rotatable tile, it needs

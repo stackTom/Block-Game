@@ -44,7 +44,6 @@ class Tile: CustomStringConvertible {
     
     var sprite: SKSpriteNode?
     
-    
     // shortens retrieval of name from tile.direction.spriteName to tile.spriteName
     var spriteName: String {
         return "blank tile"
@@ -84,13 +83,16 @@ class Tile: CustomStringConvertible {
 
 class ArrowTile: Tile {
     var direction: TileDirection
-    var tileTypeToImg = ["right_tile", "down_tile", "left_tile", "up_tile"]
     
     // init to up arrow by default
     init(column: Int, row: Int, direction: TileDirection) {
         self.direction = direction
         super.init(column: column, row: row)
-        self.sprite = SKSpriteNode(imageNamed: self.tileTypeToImg[self.direction.rawValue])
+        self.sprite = SKSpriteNode(imageNamed: self.spriteName)
+    }
+    
+    override var spriteName: String {
+        return self.direction.spriteName + "_tile"
     }
     
     override var description: String {
@@ -106,7 +108,7 @@ class RotatableTile: ArrowTile {
         self.direction = TileDirection(rawValue: (self.direction.rawValue + 1) % Tile.NUM_DIRECTIONS)!
         
         // set the new texture of the sprite
-        self.sprite?.texture = SKTexture(imageNamed: self.tileTypeToImg[self.direction.rawValue])
+        self.sprite?.texture = SKTexture(imageNamed: self.spriteName)
     }
 }
 

@@ -13,6 +13,7 @@ import SpriteKit
 class GameScene: SKScene {
     static let NUM_ROWS = 5
     static let NUM_COLUMNS = 5
+    var lastTouchNode: SKNode!
     
     // implicitly unwrapped optional doesn't have to be initialized. we can't pass self by calling the constructor here, and trying to override the default initializer
     // is a problem as we need to initialize class variables before calling super, yet we can't use self.
@@ -24,6 +25,7 @@ class GameScene: SKScene {
         self.size = view.bounds.size
         
         self.gameBoard = Gameboard(rows: GameScene.NUM_ROWS, columns: GameScene.NUM_COLUMNS, gameScene: self)
+        lastTouchNode = nil
         
         // pan recognizer for selecting tiles with a pan
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: "didPanOnTiles:")
@@ -53,7 +55,10 @@ class GameScene: SKScene {
         if let touchedSpriteName = touchedSprite.name {
             if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
                 if let touchedTileRot = touchedTile as? RotatableTile {
-                    touchedTileRot.rotate()
+                    if self.lastTouchNode !== touchedSprite {
+                        self.lastTouchNode = touchedSprite
+                        touchedTileRot.rotate()
+                    }
                 }
             }
         }

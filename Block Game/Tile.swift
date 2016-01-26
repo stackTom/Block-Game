@@ -112,3 +112,17 @@ class RotatableTile: ArrowTile {
     }
 }
 
+class LavaTile: Tile {
+    override init(column: Int, row: Int) {
+        super.init(column: column, row: row)
+        self.sprite = SKSpriteNode(imageNamed: "lava_tile")
+    }
+}
+
+class TeleporterTile: Tile {
+    override init(column: Int, row: Int) {
+        super.init(column: column, row: row)
+        self.sprite = SKSpriteNode(imageNamed: "teleporter_tile")
+    }
+}
+

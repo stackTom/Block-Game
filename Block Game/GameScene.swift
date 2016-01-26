@@ -19,6 +19,7 @@ class GameScene: SKScene {
     // is a problem as we need to initialize class variables before calling super, yet we can't use self.
     // see: http://stackoverflow.com/questions/27028813/error-in-swift-class-property-not-initialized-at-super-init-call-how-to-initi
     var gameBoard: Gameboard!
+    var levelLoader: LevelLoader!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -30,6 +31,8 @@ class GameScene: SKScene {
         // pan recognizer for selecting tiles with a pan
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: "didPanOnTiles:")
         self.view?.addGestureRecognizer(gestureRecognizer)
+        self.levelLoader = LevelLoader(gameboard: self.gameBoard)
+        levelLoader.loadLevel("test")
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

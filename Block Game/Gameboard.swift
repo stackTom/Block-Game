@@ -32,8 +32,7 @@ class Gameboard {
         let spriteHeight = CGFloat(board_scene_ratio) * boardHeight / CGFloat(columns)
         let spriteWidth = CGFloat(board_scene_ratio) * boardWidth / CGFloat(rows)
         print("Space Height: \(spriteHeight)")
-        print("Space Width: \(spriteWidth)")
-        
+        print("Space Width: \(spriteWidth)")        
         
         // initialize coordinates for center of each tile in board in CGFloat type
         // coordinates for center of each tile in double to be converted to CGFloat
@@ -80,8 +79,9 @@ class Gameboard {
                 }
                 
                 let position = CGPointMake(xCoord, yCoord)
+                
                 // add a new tile to specific row, column
-                let newTile = Tile(column: column, row: row, direction: .Up)
+                let newTile = RotatableTile(column: column, row: row, direction: .Right)
                 tiles[column].append(newTile)
                 let newTileSprite = newTile.sprite!
                 
@@ -96,16 +96,6 @@ class Gameboard {
                 gameScene.addChild(newTileSprite)
                 print("added \(column) \(row) at \(position)")
             }
-        }
-        // can be deleted later, this was for testing rotatable tiles
-        tiles[0][0].sprite?.removeFromParent()
-        tiles[0][0] = RotatableTile(column: 0, row: 1, direction: .Up)
-        if let test = tiles[0][0].sprite {
-            test.size = CGSizeMake(spriteWidth, spriteHeight)
-            test.position = CGPointMake(67.275, 616.4)
-            test.name = "0, 0"
-            print("Added \(test.name)")
-            gameScene.addChild(test)
         }
     }
     

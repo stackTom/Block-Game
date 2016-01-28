@@ -99,6 +99,10 @@ class Gameboard {
         }
     }
     
+    func replaceTileAt(row: Int, column: Int, withTile tile:Tile) {
+        self.tiles[column][row] = tile
+    }
+    
     func tileFromName(tileName: String) -> Tile? {
         // no way to access character at index in swift see: https://www.reddit.com/r/swift/comments/2bvrh9/getting_a_specific_character_in_a_string/
         let colIndex = tileName.startIndex.advancedBy(0)

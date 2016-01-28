@@ -25,14 +25,13 @@ class GameScene: SKScene {
         /* Setup your scene here */
         self.size = view.bounds.size
         
-        self.gameBoard = Gameboard(rows: GameScene.NUM_ROWS, columns: GameScene.NUM_COLUMNS, gameScene: self)
         lastTouchNode = nil
         
         // pan recognizer for selecting tiles with a pan
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: "didPanOnTiles:")
         self.view?.addGestureRecognizer(gestureRecognizer)
-        self.levelLoader = LevelLoader(gameboard: self.gameBoard)
-        levelLoader.loadLevel("test")
+        self.levelLoader = LevelLoader(gameScene: self)
+        self.gameBoard = levelLoader.loadLevel("test")
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

@@ -23,27 +23,52 @@ class LevelLoader {
     
     static let LEVEL_EXTENSION = ".lvl"
     
-    let gameboard: Gameboard
+    var gameboard: Gameboard!
     let mainBundle: NSBundle
+    var gameScene: GameScene
     
-    init(gameboard: Gameboard) {
-        self.gameboard = gameboard
+    init(gameScene: GameScene) {
+        self.gameScene = gameScene
+        self.gameboard = nil
         self.mainBundle = NSBundle.mainBundle()
     }
     
-    func loadLevel(levelName: String) {
+    func loadLevel(levelName: String) -> Gameboard {
         let filePath = self.mainBundle.pathForResource("/levels/" + levelName, ofType: LevelLoader.LEVEL_EXTENSION)
+        var lines = [String]()
         
         if let streamReader = StreamReader(path: filePath!) {
             defer {
                 streamReader.close()
             }
             
+            // put the lines in our array so we can create the gameboard of appropriate size
             for line in streamReader {
-                for character in line.characters {
-                    // add switch and load in tiles into gameboard using the constants defined above
+                lines.append(String(line))
+            }
+        }
+        let numRows = lines[0].characters.count
+        self.gameboard = Gameboard(rows: numRows, columns: lines.count, gameScene: self.gameScene)
+        
+        for line in lines {
+            for char in line.characters {
+                switch String(char) {
+                case LevelLoader.DEFAULT_TILE:
+                    break
+                case LevelLoader.ARROW_TILE:
+                    break
+                case LevelLoader.ROTATABLE_TILE:
+                    break
+                case LevelLoader.LAVA_TILE:
+                    break
+                case LevelLoader.TELEPORTER_TILE:
+                    break
+                default:
+                    break // throw and/or print an error here
                 }
             }
         }
+        
+        return self.gameboard
     }
 }

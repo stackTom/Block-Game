@@ -18,7 +18,6 @@
 		7A5ABBDA1C51272C00DE429B /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ABBD91C51272C00DE429B /* Tile.swift */; };
 		7A9777571C57DCC400088D91 /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9777561C57DCC400088D91 /* StreamReader.swift */; };
 		7A9777591C57DD2A00088D91 /* LevelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9777581C57DD2A00088D91 /* LevelLoader.swift */; };
-		7A97775B1C57E2DD00088D91 /* levels in Resources */ = {isa = PBXBuildFile; fileRef = 7A97775A1C57E2DD00088D91 /* levels */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +34,6 @@
 		7A5ABBD91C51272C00DE429B /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		7A9777561C57DCC400088D91 /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
 		7A9777581C57DD2A00088D91 /* LevelLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelLoader.swift; sourceTree = "<group>"; };
-		7A97775A1C57E2DD00088D91 /* levels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = levels; path = "Block Game/levels"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +50,6 @@
 		1CF309561C4F338B0050019A = {
 			isa = PBXGroup;
 			children = (
-				7A97775A1C57E2DD00088D91 /* levels */,
 				1CF309611C4F338B0050019A /* Block Game */,
 				1CF309601C4F338B0050019A /* Products */,
 			);
@@ -144,7 +141,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A97775B1C57E2DD00088D91 /* levels in Resources */,
 				7A4CAA9E1C5176AF00E170F1 /* GameScene.sks in Resources */,
 				1CF309711C4F338B0050019A /* LaunchScreen.storyboard in Resources */,
 				1CF3096E1C4F338B0050019A /* Assets.xcassets in Resources */,

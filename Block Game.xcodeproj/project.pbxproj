@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C5B788B1C59C9AE0063F5CB /* levels in Resources */ = {isa = PBXBuildFile; fileRef = 1C5B788A1C59C9AE0063F5CB /* levels */; };
 		1C6517F71C5452BF004C043D /* Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6517F61C5452BF004C043D /* Gameboard.swift */; };
 		1CF309631C4F338B0050019A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF309621C4F338B0050019A /* AppDelegate.swift */; };
 		1CF309671C4F338B0050019A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF309661C4F338B0050019A /* GameScene.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C5B788A1C59C9AE0063F5CB /* levels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = levels; path = "Block Game/levels"; sourceTree = "<group>"; };
 		1C6517F61C5452BF004C043D /* Gameboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
 		1CF3095F1C4F338B0050019A /* Block Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF309621C4F338B0050019A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 		1CF309561C4F338B0050019A = {
 			isa = PBXGroup;
 			children = (
+				1C5B788A1C59C9AE0063F5CB /* levels */,
 				1CF309611C4F338B0050019A /* Block Game */,
 				1CF309601C4F338B0050019A /* Products */,
 			);
@@ -141,6 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C5B788B1C59C9AE0063F5CB /* levels in Resources */,
 				7A4CAA9E1C5176AF00E170F1 /* GameScene.sks in Resources */,
 				1CF309711C4F338B0050019A /* LaunchScreen.storyboard in Resources */,
 				1CF3096E1C4F338B0050019A /* Assets.xcassets in Resources */,

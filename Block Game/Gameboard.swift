@@ -16,16 +16,14 @@ class Gameboard {
     
     var tiles: [[Tile]] = [[Tile]]()
     
-    init(rows: Int, columns: Int, gameScene: GameScene) {
+    init(rows: Int, columns: Int, boardWidth: CGFloat, boardHeight: CGFloat) {
         
         let board_scene_ratio = 0.75
         
         // Bottom (y = 0) so put board start at top
-        let boardHeight = gameScene.size.height
         print("Board Height: \(boardHeight)")
         
         // Left (x = 0) so put board start at left
-        let boardWidth =  gameScene.size.width
         print("Board Width: \(boardWidth)")
         
         // Adjust tileSprite size to fit into 75% of the board depending on number of tiles
@@ -81,7 +79,7 @@ class Gameboard {
                 let position = CGPointMake(xCoord, yCoord)
                 
                 // add a new tile to specific row, column
-                let newTile = RotatableTile(column: column, row: row, direction: .Right)
+                let newTile = Tile(column: column, row: row)
                 tiles[column].append(newTile)
                 let newTileSprite = newTile.sprite!
                 
@@ -93,8 +91,6 @@ class Gameboard {
                 newTileSprite.size = CGSizeMake(spriteWidth, spriteHeight)
                 newTileSprite.position = position
                 // add sprite
-                gameScene.addChild(newTileSprite)
-                print("added \(column) \(row) at \(position)")
             }
         }
     }

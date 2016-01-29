@@ -62,6 +62,13 @@ class Tile: CustomStringConvertible {
         self.sprite = SKSpriteNode(imageNamed: "blank_tile")
     }
     
+    convenience init(column: Int, row: Int, spritePosition: CGPoint, spriteSize: CGSize, spriteName: String) {
+        self.init(column: column, row: row)
+        self.sprite?.position = spritePosition
+        self.sprite?.size = spriteSize
+        self.sprite?.name = spriteName
+    }
+    
     // I initialize direction to up, but if user taps rotatable tile, it needs
     // to change direction - rotatable tile subclass
     
@@ -89,6 +96,13 @@ class ArrowTile: Tile {
         self.direction = direction
         super.init(column: column, row: row)
         self.sprite = SKSpriteNode(imageNamed: self.spriteName)
+    }
+    
+    convenience init(column: Int, row: Int, direction: TileDirection, spritePosition: CGPoint, spriteSize: CGSize, spriteName: String) {
+        self.init(column: column, row: row, direction: direction)
+        self.sprite?.position = spritePosition
+        self.sprite?.size = spriteSize
+        self.sprite?.name = spriteName
     }
     
     override var spriteName: String {

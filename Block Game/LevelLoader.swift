@@ -48,25 +48,38 @@ class LevelLoader {
             }
         }
         let numRows = lines[0].characters.count
-        self.gameboard = Gameboard(rows: numRows, columns: lines.count, gameScene: self.gameScene)
+        self.gameboard = Gameboard(rows: numRows, columns: lines.count, boardWidth: self.gameScene.size.width, boardHeight: self.gameScene.size.height)
         
+        var currColumn = 0
         for line in lines {
+            var currRow = 0
             for char in line.characters {
+                let currentTile = self.gameboard.tiles[currColumn][currRow]
+                let currentTileSprite = currentTile.sprite!
+                let spriteName = String(currColumn) + ", " + String(currRow)
+                
+                // make sure we init the new tile with the posizion and size of the old tile
                 switch String(char) {
                 case LevelLoader.DEFAULT_TILE:
                     break
                 case LevelLoader.ARROW_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = ArrowTile(column: currColumn, row: currRow, direction: .Up, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
                     break
                 case LevelLoader.ROTATABLE_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = RotatableTile(column: currColumn, row: currRow, direction: .Right, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
                     break
                 case LevelLoader.LAVA_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = LavaTile(column: currColumn, row: currRow, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
                     break
                 case LevelLoader.TELEPORTER_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = TeleporterTile(column: currColumn, row: currRow, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
                     break
                 default:
                     break // throw and/or print an error here
                 }
+                currRow++
             }
+            currColumn++
         }
         
         return self.gameboard

@@ -13,7 +13,7 @@ import SpriteKit
 class GameScene: SKScene {
     static let NUM_ROWS = 5
     static let NUM_COLUMNS = 5
-    var lastTouchNode: SKNode!
+    var lastTouchNode: SKNode?
     
     // implicitly unwrapped optional doesn't have to be initialized. we can't pass self by calling the constructor here, and trying to override the default initializer
     // is a problem as we need to initialize class variables before calling super, yet we can't use self.
@@ -32,6 +32,13 @@ class GameScene: SKScene {
         self.view?.addGestureRecognizer(gestureRecognizer)
         self.levelLoader = LevelLoader(gameScene: self)
         self.gameBoard = levelLoader.loadLevel("test")
+        
+        // add sprites to scene
+        for tiles in self.gameBoard.tiles {
+            for tile in tiles {
+                self.addChild(tile.sprite!)
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -58,12 +65,12 @@ class GameScene: SKScene {
             if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
                 if let touchedTileRot = touchedTile as? RotatableTile {
                     if self.lastTouchNode !== touchedSprite {
-                        self.lastTouchNode = touchedSprite
                         touchedTileRot.rotate()
                     }
                 }
             }
         }
+        self.lastTouchNode = touchedSprite
     }
     
     override func update(currentTime: CFTimeInterval) {

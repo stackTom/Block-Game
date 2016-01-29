@@ -77,20 +77,13 @@ class Gameboard {
                 }
                 
                 let position = CGPointMake(xCoord, yCoord)
-                
-                // add a new tile to specific row, column
-                let newTile = Tile(column: column, row: row)
-                tiles[column].append(newTile)
-                let newTileSprite = newTile.sprite!
-                
-                
+                let size = CGSizeMake(spriteWidth, spriteHeight)
                 // name = row, column to identify sprite at specific location
                 let tileName = String(column) + ", " + String(row)
-                newTileSprite.name = tileName
-                    
-                newTileSprite.size = CGSizeMake(spriteWidth, spriteHeight)
-                newTileSprite.position = position
-                // add sprite
+                
+                // add a new tile to specific row, column
+                let newTile = Tile(column: column, row: row, spritePosition: position, spriteSize: size, spriteName: tileName)
+                tiles[column].append(newTile)
             }
         }
     }

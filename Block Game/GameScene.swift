@@ -46,17 +46,17 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         for touch in touches {
             let position = touch.locationInView(self.view)
-            self.handleTouches(position)
+            self.handleTouches(position, canRepeatTouch: true)
         }
     }
     
     func didPanOnTiles(gestureRecognizer: UIPanGestureRecognizer) {
         let position = gestureRecognizer.locationInView(self.view)
-        self.handleTouches(position)
+        self.handleTouches(position, canRepeatTouch: false)
     }
     
     // handles sprite behavior (i.e. rotation, highlating) based on touch position
-    func handleTouches(locationInView: CGPoint) {
+    func handleTouches(locationInView: CGPoint, canRepeatTouch: Bool) {
         // convert to the coord system of this scene class
         let convertedPosition = self.convertPointFromView(locationInView)
         let touchedSprite = self.nodeAtPoint(convertedPosition)
@@ -65,7 +65,10 @@ class GameScene: SKScene {
         if let touchedSpriteName = touchedSprite.name {
             if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
                 if let touchedTileRot = touchedTile as? RotatableTile {
-                    if self.lastTouchNode !== touchedSprite {
+                    // if repeat touches are allowed, simply rotate, else only rotate if we are touching a different node
+                    if canRepeatTouch {
+                        touchedTileRot.rotate()
+                    } else if self.lastTouchNode !== touchedSprite {
                         touchedTileRot.rotate()
                     }
                 }

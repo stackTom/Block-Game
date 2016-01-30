@@ -69,7 +69,10 @@ class GameScene: SKScene {
         
         // find the tile we are touching, if it is a rotatable tile
         if let touchedSpriteName = touchedSprite.name {
-            if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
+            // put character repositioning code here
+            if touchedSpriteName == self.character.sprite?.name {
+                
+            } else if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
                 if let touchedTileRot = touchedTile as? RotatableTile {
                     // if repeat touches are allowed, simply rotate, else only rotate if we are touching a different node
                     if canRepeatTouch {

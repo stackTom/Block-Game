@@ -45,6 +45,7 @@ class Tile: CustomStringConvertible {
     var sprite: SKSpriteNode?
     
     // shortens retrieval of name from tile.direction.spriteName to tile.spriteName
+    // is this line of code necessary?
     var spriteName: String {
         return "blank tile"
     }
@@ -68,24 +69,6 @@ class Tile: CustomStringConvertible {
         self.sprite?.size = spriteSize
         self.sprite?.name = spriteName
     }
-    
-    // I initialize direction to up, but if user taps rotatable tile, it needs
-    // to change direction - rotatable tile subclass
-    
-    // Make subclasses of rotatable, non-rotatable, and teleporting tiles
-    
-    
-    // There are tiles that can be rotated and tiles that cannot be rotated
-    // Non-rotatable tiles are loaded at the start of the game
-    // Rotatable tiles are the ones that user places on the existing grid
-    // Cannot place tiles on top of each other
-    // Then there will be some spots on grid where you can't place tile on
-    // no class for teleporting as it is not changing something internal to itself
-    
-    
-    // After user places a tile on the grid, if the tile can be rotated,
-    // then when the user taps the tile, rotate 90 degrees clockwise
-    // So if default direction is .Right, one tap turns tile to .Down direction
 }
 
 class ArrowTile: Tile {

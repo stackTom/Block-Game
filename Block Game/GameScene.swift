@@ -39,6 +39,7 @@ class GameScene: SKScene {
                 self.addChild(tile.sprite!)
             }
         }
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

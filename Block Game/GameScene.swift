@@ -19,6 +19,7 @@ class GameScene: SKScene {
     // is a problem as we need to initialize class variables before calling super, yet we can't use self.
     // see: http://stackoverflow.com/questions/27028813/error-in-swift-class-property-not-initialized-at-super-init-call-how-to-initi
     var gameBoard: Gameboard!
+    var character: Character!
     var levelLoader: LevelLoader!
     
     override func didMoveToView(view: SKView) {
@@ -32,6 +33,8 @@ class GameScene: SKScene {
         self.view?.addGestureRecognizer(gestureRecognizer)
         self.levelLoader = LevelLoader(gameScene: self)
         self.gameBoard = levelLoader.loadLevel("test")
+        let topLeftTile = self.gameBoard.tiles[0][0]
+        self.character = Character(column: 0, row: 0, spritePosition: topLeftTile.sprite!.position, spriteSize: topLeftTile.sprite!.size, spriteName: "character")
         
         // add sprites to scene
         for tiles in self.gameBoard.tiles {
@@ -39,6 +42,8 @@ class GameScene: SKScene {
                 self.addChild(tile.sprite!)
             }
         }
+        
+        self.addChild(character.sprite!)
         
     }
     

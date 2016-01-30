@@ -17,7 +17,7 @@ class Character: CustomStringConvertible {
     
     var sprite: SKSpriteNode?
     
-    // shortens retrieval of name from character.direction.spriteName to tile.spriteName
+    // shortens retrieval of name from character.direction.spriteName to character.spriteName
     var spriteName: String {
         return "character"
     }

@@ -34,7 +34,9 @@ class GameScene: SKScene {
         self.levelLoader = LevelLoader(gameScene: self)
         self.gameBoard = levelLoader.loadLevel("test")
         let topLeftTile = self.gameBoard.tiles[0][0]
+        // initialize character and shrink sprite to be half the tile size
         self.character = Character(column: 0, row: 0, spritePosition: topLeftTile.sprite!.position, spriteSize: topLeftTile.sprite!.size, spriteName: "character")
+        self.character.sprite!.setScale(0.5)
         
         // add sprites to scene
         for tiles in self.gameBoard.tiles {
@@ -42,7 +44,6 @@ class GameScene: SKScene {
                 self.addChild(tile.sprite!)
             }
         }
-        
         self.addChild(character.sprite!)
         
     }

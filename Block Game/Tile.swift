@@ -74,7 +74,10 @@ class Tile: CustomStringConvertible {
 class ArrowTile: Tile {
     var direction: TileDirection
     
-    // init to up arrow by default
+    // it needs to be initialized to the direction that the level loader reads it to be
+    // l = left, r = right, d = down, u = up in the test.lvl file
+    // for some reason direction is hardcoded to be up...
+    
     init(column: Int, row: Int, direction: TileDirection) {
         self.direction = direction
         super.init(column: column, row: row)
@@ -89,7 +92,7 @@ class ArrowTile: Tile {
     }
     
     override var spriteName: String {
-        return self.direction.spriteName + "_tile"
+        return "fixed_" + self.direction.spriteName + "_tile"
     }
     
     override var description: String {
@@ -98,6 +101,11 @@ class ArrowTile: Tile {
 }
 
 class RotatableTile: ArrowTile {
+    
+    // override name to get sprite for the corresponding direction
+    override var spriteName: String {
+        return self.direction.spriteName + "_tile"
+    }
     
     // rotate right by 90 degrees
     func rotate() {

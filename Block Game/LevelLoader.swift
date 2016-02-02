@@ -41,6 +41,11 @@ class LevelLoader {
     static let LAVA_TILE = "L"
     static let TELEPORTER_TILE = "T"
     
+    // static let ARROW_TILE = "A" - there are 4 types of arrow types with directions
+    static let LEFT_ARROW_TILE = "l"
+    static let RIGHT_ARROW_TILE = "r"
+    static let UP_ARROW_TILE = "u"
+    static let DOWN_ARROW_TILE = "d"
     
     static let LEVEL_EXTENSION = ".lvl"
     
@@ -83,10 +88,20 @@ class LevelLoader {
                 
                 // make sure we init the new tile with the posizion and size of the old tile
                 switch String(char) {
+                    
                 case LevelLoader.DEFAULT_TILE:
                     break
-                case LevelLoader.ARROW_TILE:
-                    self.gameboard.tiles[currColumn][currRow] = ArrowTile(column: currColumn, row: currRow, direction: direction, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
+                case LevelLoader.RIGHT_ARROW_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = ArrowTile(column: currColumn, row: currRow, direction: TileDirection(rawValue: (0))!, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
+                    break
+                case LevelLoader.UP_ARROW_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = ArrowTile(column: currColumn, row: currRow, direction: TileDirection(rawValue: (1))!, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
+                    break
+                case LevelLoader.DOWN_ARROW_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = ArrowTile(column: currColumn, row: currRow, direction: TileDirection(rawValue: (2))!, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
+                    break
+                case LevelLoader.LEFT_ARROW_TILE:
+                    self.gameboard.tiles[currColumn][currRow] = ArrowTile(column: currColumn, row: currRow, direction: TileDirection(rawValue: (3))!, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)
                     break
                 case LevelLoader.ROTATABLE_TILE:
                     self.gameboard.tiles[currColumn][currRow] = RotatableTile(column: currColumn, row: currRow, direction: direction, spritePosition: currentTileSprite.position, spriteSize: currentTileSprite.size, spriteName: spriteName)

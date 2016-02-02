@@ -13,8 +13,7 @@ enum TileDirection: Int, CustomStringConvertible {
     // enum identification: right = 0, down = 1, left = 2, up = 3
     case Right = 0, Down, Left, Up
     
-    // return filename matching direction
-    // need to get sprite file for each direction
+    // spriteName = direction of the tile
     var spriteName: String {
         switch self {
         case .Up:

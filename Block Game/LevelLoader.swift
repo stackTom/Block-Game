@@ -36,12 +36,11 @@ and <R> is any tile which is a rotatable tile (or a subclass of rotatable tile)
 class LevelLoader {
     // encoding characters for the type of tile
     static let DEFAULT_TILE = "D"
-    static let ARROW_TILE = "A"
     static let ROTATABLE_TILE = "R"
     static let LAVA_TILE = "L"
     static let TELEPORTER_TILE = "T"
     
-    // static let ARROW_TILE = "A" - there are 4 types of arrow types with directions
+    // there are 4 types of arrow tile (non-rotatable) with directions
     static let LEFT_ARROW_TILE = "l"
     static let RIGHT_ARROW_TILE = "r"
     static let UP_ARROW_TILE = "u"

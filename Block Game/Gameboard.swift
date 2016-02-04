@@ -44,11 +44,6 @@ class Gameboard {
         var xCoord: CGFloat = CGFloat(0.0)
         var yCoord: CGFloat = CGFloat(0.0)
         
-        // coordinates for center of each tile in double to be converted to CGFloat
-        // 0, 0 is bottom left so x = 0, y = boardHeight = top left
-        // increment x a little to the right: spriteWidth / 2.0 = center of leftmost tile
-        // and 0.25 / 2 = 12.5% of the tile (center of the left gap caused by the board taking up 75% of scene)
-        
         // set up tiles Array a.k.a. game board
         for var column = 0; column < columns; column++ {
             let tileRow = [Tile]()

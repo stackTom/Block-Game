@@ -13,8 +13,7 @@ enum TileDirection: Int, CustomStringConvertible {
     // enum identification: right = 0, down = 1, left = 2, up = 3
     case Right = 0, Down, Left, Up
     
-    // return filename matching direction
-    // need to get sprite file for each direction
+    // spriteName = direction of the tile
     var spriteName: String {
         switch self {
         case .Up:
@@ -45,6 +44,7 @@ class Tile: CustomStringConvertible {
     var sprite: SKSpriteNode?
     
     // shortens retrieval of name from tile.direction.spriteName to tile.spriteName
+    // is this line of code necessary?
     var spriteName: String {
         return "blank tile"
     }
@@ -68,30 +68,15 @@ class Tile: CustomStringConvertible {
         self.sprite?.size = spriteSize
         self.sprite?.name = spriteName
     }
-    
-    // I initialize direction to up, but if user taps rotatable tile, it needs
-    // to change direction - rotatable tile subclass
-    
-    // Make subclasses of rotatable, non-rotatable, and teleporting tiles
-    
-    
-    // There are tiles that can be rotated and tiles that cannot be rotated
-    // Non-rotatable tiles are loaded at the start of the game
-    // Rotatable tiles are the ones that user places on the existing grid
-    // Cannot place tiles on top of each other
-    // Then there will be some spots on grid where you can't place tile on
-    // no class for teleporting as it is not changing something internal to itself
-    
-    
-    // After user places a tile on the grid, if the tile can be rotated,
-    // then when the user taps the tile, rotate 90 degrees clockwise
-    // So if default direction is .Right, one tap turns tile to .Down direction
 }
 
 class ArrowTile: Tile {
     var direction: TileDirection
     
-    // init to up arrow by default
+    // it needs to be initialized to the direction that the level loader reads it to be
+    // l = left, r = right, d = down, u = up in the test.lvl file
+    // for some reason direction is hardcoded to be up...
+    
     init(column: Int, row: Int, direction: TileDirection) {
         self.direction = direction
         super.init(column: column, row: row)
@@ -106,7 +91,7 @@ class ArrowTile: Tile {
     }
     
     override var spriteName: String {
-        return self.direction.spriteName + "_tile"
+        return "fixed_" + self.direction.spriteName + "_tile"
     }
     
     override var description: String {
@@ -115,6 +100,11 @@ class ArrowTile: Tile {
 }
 
 class RotatableTile: ArrowTile {
+    
+    // override name to get sprite for the corresponding direction
+    override var spriteName: String {
+        return self.direction.spriteName + "_tile"
+    }
     
     // rotate right by 90 degrees
     func rotate() {

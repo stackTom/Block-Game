@@ -35,7 +35,7 @@ class GameScene: SKScene {
         self.gameBoard = levelLoader.loadLevel("test")
         let topLeftTile = self.gameBoard.tiles[0][0]
         // initialize character and shrink sprite to be half the tile size
-        self.character = Character(column: 0, row: 0, spritePosition: topLeftTile.sprite!.position, spriteSize: topLeftTile.sprite!.size, spriteName: "character")
+        self.character = Character(column: 0, row: 0, currentTile: topLeftTile, spritePosition: topLeftTile.sprite!.position, spriteSize: topLeftTile.sprite!.size, spriteName: "character")
         self.character.sprite!.setScale(0.5)
         
         // add sprites to scene
@@ -73,6 +73,7 @@ class GameScene: SKScene {
             if touchedSpriteName == self.character.sprite?.name {
                 
             } else if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
+                self.character.moveTo(touchedTile)
                 if let touchedTileRot = touchedTile as? RotatableTile {
                     // if repeat touches are allowed, simply rotate, else only rotate if we are touching a different node
                     if canRepeatTouch {

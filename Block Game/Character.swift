@@ -16,6 +16,7 @@ class Character: CustomStringConvertible {
     var row: Int
     
     var sprite: SKSpriteNode?
+    var currentTile: Tile!
     
     // shortens retrieval of name from character.direction.spriteName to character.spriteName
     var spriteName: String {
@@ -34,11 +35,17 @@ class Character: CustomStringConvertible {
         self.sprite = SKSpriteNode(imageNamed: "character")
     }
     
-    convenience init(column: Int, row: Int, spritePosition: CGPoint, spriteSize: CGSize, spriteName: String) {
+    convenience init(column: Int, row: Int, currentTile: Tile, spritePosition: CGPoint, spriteSize: CGSize, spriteName: String) {
         self.init(column: column, row: row)
         self.sprite?.position = spritePosition
         self.sprite?.size = spriteSize
         self.sprite?.name = spriteName
+        self.currentTile = currentTile
+    }
+    
+    func moveTo(tile: Tile) {
+        let moveAction = SKAction.moveTo(tile.sprite!.position, duration: 0.5)
+        self.sprite?.runAction(moveAction)
     }
 
 }

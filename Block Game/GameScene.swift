@@ -21,6 +21,7 @@ class GameScene: SKScene {
     var gameBoard: Gameboard!
     var character: Character!
     var levelLoader: LevelLoader!
+    var characterIsSelected = false
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -71,9 +72,12 @@ class GameScene: SKScene {
         if let touchedSpriteName = touchedSprite.name {
             // put character repositioning code here
             if touchedSpriteName == self.character.sprite?.name {
-                
+                self.characterIsSelected = !self.characterIsSelected
             } else if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
-                self.character.moveTo(touchedTile)
+                if (self.characterIsSelected) {
+                    self.character.moveTo(touchedTile)
+                    self.characterIsSelected = false
+                }
                 if let touchedTileRot = touchedTile as? RotatableTile {
                     // if repeat touches are allowed, simply rotate, else only rotate if we are touching a different node
                     if canRepeatTouch {

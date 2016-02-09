@@ -49,7 +49,7 @@ class GameScene: SKScene {
                 self.addChild(tile.sprite!)
             }
         }
-        self.addChild(character.sprite!)
+        self.addChild(self.character.sprite!)
         
     }
     
@@ -59,8 +59,20 @@ class GameScene: SKScene {
             let position = touch.locationInView(self.view)
             let touchedNode = getTouchedNode(position)
             
-            if let touchedSpriteName = touchedNode?.name where touchedNode !== character.sprite {
-                gameController.moveCharacterToTileAlongPath(self.gameBoard.tileFromName(touchedSpriteName)!)
+            if let touchedSpriteName = touchedNode?.name {
+                // touched the character
+                if touchedSpriteName == self.character.sprite?.name {
+                    self.characterIsSelected = true
+                // touched a tile, so move the character there. but only do so if the tile is adjacent to the character's current tile
+                } else if (self.characterIsSelected) {
+                    if self.gameController.tile(gameBoard.tileFromName(touchedSpriteName)!, adjacentToTile: self.character.currentTile) {
+                        character.moveTo(self.gameBoard.tileFromName(touchedSpriteName)!)
+                        let pathAction = SKAction.moveTo((character.currentTile.sprite?.position)!, duration: 0.2)
+                        self.character.sprite?.runAction(pathAction)
+                        self.characterIsSelected = false
+                        self.gameController.lastTouchedTile = self.character.currentTile
+                    }
+                }
             }
         }
     }
@@ -72,19 +84,45 @@ class GameScene: SKScene {
         // if the pan gesture is beginning, get the location at which it begins
         if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
             self.panInitialTouchedNode = getTouchedNode(position)
-        // if the pan gesture ended, move the tile to the current tile after the pan has ended
+        // if the pan gesture ended, move the tile to the current tile following the route the User made
         } else if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
             let touchedNode = getTouchedNode(position)
             
-            // but only do so if we began the pan gesture touching the character tile or the tile on which the character tile is originally on
-            if let touchedSpriteName = touchedNode?.name where (self.panInitialTouchedNode!.name! == character.currentTile.description || self.panInitialTouchedNode?.name == character.sprite?.name) {
-                gameController.moveCharacterToTileAlongPath(self.gameBoard.tileFromName(touchedSpriteName)!)
+            // let us move the tile along the path, only if there are no errors (i.e. non adjacent consecutive tiles) on our path
+            if (!self.gameController.pathHasError) {
+                let lastTouchedTile = touchedNode?.name == self.character.sprite?.name ? self.character.currentTile : self.gameBoard.tileFromName((touchedNode?.name)!)
+                
+                // move the character
+                self.character.moveTo(lastTouchedTile)
+                
+                // actually do the animation
+                let path = CGPathCreateMutable()
+                CGPathMoveToPoint(path, nil, (self.character.sprite?.position.x)!, (self.character.sprite?.position.y)!)
+                
+                for tile in self.gameController.panRoute {
+                    CGPathAddLineToPoint(path, nil, (tile.sprite?.position.x)!, (tile.sprite?.position.y)!)
+                }
+                
+                let pathAction = SKAction.followPath(path, asOffset: false, orientToPath: false, duration: 2.0)
+                self.character.sprite?.runAction(pathAction)
+                self.gameController.pathHasError = false;
             }
+            
+            // clear array path. done to reset the route so a new one can be constructed
+            self.gameController.panRoute.removeAll()
+            self.gameController.pathHasError = false
+            self.gameController.lastTouchedTile = self.character.currentTile
+            
         // otherwise, this method is called while the user is panning. In such a case, add the current tile being panned on to the "route" to be potentially followed
         // by the character sprite
         } else {
-            let tile = self.gameBoard.tileFromName((getTouchedNode(position)?.name)!)
-            self.gameController.addTileToPath(tile!)
+            let touchedNode = getTouchedNode(position)
+            // sometimes the gesture recognizer recognizes the character and sometimes the sprite it is on. if it is the character, set it to the tile the character is currently on
+            // this prevents a segmentation fault. we must call the tile from name in other cases as the gesture recognizer will only give the character when the user's finger is right
+            // above the character tile (at the first instances of panning). after that, we can't use the character's current tile, as the character won't move to a new position
+            // until after the drag gesture is done
+            let lastTouchedTile = touchedNode?.name == self.character.sprite?.name ? self.character.currentTile : self.gameBoard.tileFromName((touchedNode?.name)!)
+            self.gameController.addTileToPath(lastTouchedTile)
         }
     }
     

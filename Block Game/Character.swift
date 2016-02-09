@@ -44,6 +44,7 @@ class Character: CustomStringConvertible {
     }
     
     func moveTo(tile: Tile) {
+        self.currentTile = tile
         let moveAction = SKAction.moveTo(tile.sprite!.position, duration: 0.5)
         self.sprite?.runAction(moveAction)
     }

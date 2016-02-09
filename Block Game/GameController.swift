@@ -24,6 +24,8 @@ class GameController {
         let tile1Column = tile1.column
         let tile2Column = tile2.column
         
+        
+        
         for var deltaX = -1; deltaX < 2; deltaX++ {
             for var deltaY = -1; deltaY < 2; deltaY++ {
                 if tile2Row + deltaX == tile1Row && tile2Column + deltaY == tile1Column {
@@ -38,9 +40,6 @@ class GameController {
     func moveCharacterToTile(tile: Tile) {
         if self.tileAdjacent(tile, toTile: self.character.currentTile) {
             self.character.moveTo(tile)
-            print("moved char")
-        } else {
-            print("didn't move char")
         }
     }
 }

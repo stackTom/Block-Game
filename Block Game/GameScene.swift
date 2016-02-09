@@ -22,6 +22,7 @@ class GameScene: SKScene {
     var character: Character!
     var levelLoader: LevelLoader!
     var characterIsSelected = false
+    var gameController: GameController!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -38,6 +39,7 @@ class GameScene: SKScene {
         // initialize character and shrink sprite to be half the tile size
         self.character = Character(column: 0, row: 0, currentTile: topLeftTile, spritePosition: topLeftTile.sprite!.position, spriteSize: topLeftTile.sprite!.size, spriteName: "character")
         self.character.sprite!.setScale(0.5)
+        self.gameController = GameController(character: self.character, gameboard: self.gameBoard)
         
         // add sprites to scene
         for tiles in self.gameBoard.tiles {
@@ -75,7 +77,7 @@ class GameScene: SKScene {
                 self.characterIsSelected = !self.characterIsSelected
             } else if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
                 if (self.characterIsSelected) {
-                    self.character.moveTo(touchedTile)
+                    self.gameController.moveCharacterToTile(touchedTile)
                     self.characterIsSelected = false
                 }
                 if let touchedTileRot = touchedTile as? RotatableTile {

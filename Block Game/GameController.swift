@@ -38,6 +38,9 @@ class GameController {
     func moveCharacterToTile(tile: Tile) {
         if self.tileAdjacent(tile, toTile: self.character.currentTile) {
             self.character.moveTo(tile)
+            print("moved char")
+        } else {
+            print("didn't move char")
         }
     }
 }

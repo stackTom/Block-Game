@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1C5B788B1C59C9AE0063F5CB /* levels in Resources */ = {isa = PBXBuildFile; fileRef = 1C5B788A1C59C9AE0063F5CB /* levels */; };
 		1C6517F71C5452BF004C043D /* Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6517F61C5452BF004C043D /* Gameboard.swift */; };
+		1C6CC4711C6985DD00927E74 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6CC4701C6985DD00927E74 /* GameController.swift */; };
 		1CF309631C4F338B0050019A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF309621C4F338B0050019A /* AppDelegate.swift */; };
 		1CF309671C4F338B0050019A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF309661C4F338B0050019A /* GameScene.swift */; };
 		1CF309691C4F338B0050019A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF309681C4F338B0050019A /* GameViewController.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		1C5B788A1C59C9AE0063F5CB /* levels */ = {isa = PBXFileReference; lastKnownFileType = folder; name = levels; path = "Block Game/levels"; sourceTree = "<group>"; };
 		1C6517F61C5452BF004C043D /* Gameboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
+		1C6CC4701C6985DD00927E74 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		1CF3095F1C4F338B0050019A /* Block Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Block Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF309621C4F338B0050019A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CF309661C4F338B0050019A /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				1CF309621C4F338B0050019A /* AppDelegate.swift */,
 				7A4CAA9D1C5176AF00E170F1 /* GameScene.sks */,
 				1CF309661C4F338B0050019A /* GameScene.swift */,
+				1C6CC4701C6985DD00927E74 /* GameController.swift */,
 				1C6517F61C5452BF004C043D /* Gameboard.swift */,
 				1CF309681C4F338B0050019A /* GameViewController.swift */,
 				7A5ABBD91C51272C00DE429B /* Tile.swift */,
@@ -166,6 +169,7 @@
 				1CF309671C4F338B0050019A /* GameScene.swift in Sources */,
 				7A9777591C57DD2A00088D91 /* LevelLoader.swift in Sources */,
 				1CF309691C4F338B0050019A /* GameViewController.swift in Sources */,
+				1C6CC4711C6985DD00927E74 /* GameController.swift in Sources */,
 				1C6517F71C5452BF004C043D /* Gameboard.swift in Sources */,
 				1CF309631C4F338B0050019A /* AppDelegate.swift in Sources */,
 				7A5ABBDA1C51272C00DE429B /* Tile.swift in Sources */,

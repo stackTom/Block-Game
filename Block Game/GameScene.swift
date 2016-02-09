@@ -14,6 +14,7 @@ class GameScene: SKScene {
     static let NUM_ROWS = 5
     static let NUM_COLUMNS = 5
     var lastTouchNode: SKNode?
+    var panInitialTouchedNode: SKNode?
     
     // implicitly unwrapped optional doesn't have to be initialized. we can't pass self by calling the constructor here, and trying to override the default initializer
     // is a problem as we need to initialize class variables before calling super, yet we can't use self.
@@ -29,6 +30,7 @@ class GameScene: SKScene {
         self.size = view.bounds.size
         
         lastTouchNode = nil
+        panInitialTouchedNode = nil
         
         // pan recognizer for selecting tiles with a pan
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: "didPanOnTiles:")
@@ -55,42 +57,45 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         for touch in touches {
             let position = touch.locationInView(self.view)
-            self.handleTouches(position, canRepeatTouch: true)
+            let touchedNode = getTouchedNode(position)
+            
+            if let touchedSpriteName = touchedNode?.name where touchedNode !== character.sprite {
+                gameController.moveCharacterToTileAlongPath(self.gameBoard.tileFromName(touchedSpriteName)!)
+            }
         }
     }
     
+    // handle pan gestures
     func didPanOnTiles(gestureRecognizer: UIPanGestureRecognizer) {
         let position = gestureRecognizer.locationInView(self.view)
-        self.handleTouches(position, canRepeatTouch: false)
+        
+        // if the pan gesture is beginning, get the location at which it begins
+        if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
+            self.panInitialTouchedNode = getTouchedNode(position)
+        // if the pan gesture ended, move the tile to the current tile after the pan has ended
+        } else if (gestureRecognizer.state == UIGestureRecognizerState.Ended) {
+            let touchedNode = getTouchedNode(position)
+            
+            // but only do so if we began the pan gesture touching the character tile or the tile on which the character tile is originally on
+            if let touchedSpriteName = touchedNode?.name where (self.panInitialTouchedNode!.name! == character.currentTile.description || self.panInitialTouchedNode?.name == character.sprite?.name) {
+                gameController.moveCharacterToTileAlongPath(self.gameBoard.tileFromName(touchedSpriteName)!)
+            }
+        // otherwise, this method is called while the user is panning. In such a case, add the current tile being panned on to the "route" to be potentially followed
+        // by the character sprite
+        } else {
+            let tile = self.gameBoard.tileFromName((getTouchedNode(position)?.name)!)
+            self.gameController.addTileToPath(tile!)
+        }
     }
     
     // handles sprite behavior (i.e. rotation, highlating) based on touch position
-    func handleTouches(locationInView: CGPoint, canRepeatTouch: Bool) {
+    func getTouchedNode(locationInView: CGPoint) -> SKNode? {
         // convert to the coord system of this scene class
         let convertedPosition = self.convertPointFromView(locationInView)
         let touchedSprite = self.nodeAtPoint(convertedPosition)
-        
-        // find the tile we are touching, if it is a rotatable tile
-        if let touchedSpriteName = touchedSprite.name {
-            // put character repositioning code here
-            if touchedSpriteName == self.character.sprite?.name {
-                self.characterIsSelected = !self.characterIsSelected
-            } else if let touchedTile = self.gameBoard.tileFromName(touchedSpriteName) {
-                if (self.characterIsSelected) {
-                    self.gameController.moveCharacterToTile(touchedTile)
-                    self.characterIsSelected = false
-                }
-                if let touchedTileRot = touchedTile as? RotatableTile {
-                    // if repeat touches are allowed, simply rotate, else only rotate if we are touching a different node
-                    if canRepeatTouch {
-                        touchedTileRot.rotate()
-                    } else if self.lastTouchNode !== touchedSprite {
-                        touchedTileRot.rotate()
-                    }
-                }
-            }
-        }
         self.lastTouchNode = touchedSprite
+        
+        return touchedSprite
     }
     
     override func update(currentTime: CFTimeInterval) {

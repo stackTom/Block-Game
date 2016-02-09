@@ -51,7 +51,11 @@ class Tile: CustomStringConvertible {
 
     // return description of tile: direction, column, row
     var description: String {
-        return "blank tile: [\(column), \(row)]"
+        return "\(column), \(row)"
+    }
+    
+    var descriptionWithType: String {
+        return "blank tile: [" + description + "]"
     }
     
     // initialize tile, default direction is Right = 0 and cannot rotate
@@ -94,8 +98,12 @@ class ArrowTile: Tile {
         return "fixed_" + self.direction.spriteName + "_tile"
     }
     
+    var descriptionWithDirection: String {
+        return "\(self.direction): [" + description + "]"
+    }
+    
     override var description: String {
-        return "\(self.direction): [\(column), \(row)]"
+        return "\(column), \(row)"
     }
 }
 

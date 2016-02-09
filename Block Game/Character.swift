@@ -20,7 +20,7 @@ class Character: CustomStringConvertible {
     
     // shortens retrieval of name from character.direction.spriteName to character.spriteName
     var spriteName: String {
-        return "character"
+        return "\(column), \(row)"
     }
     
     // return description of character: column, row
@@ -45,8 +45,5 @@ class Character: CustomStringConvertible {
     
     func moveTo(tile: Tile) {
         self.currentTile = tile
-        let moveAction = SKAction.moveTo(tile.sprite!.position, duration: 0.5)
-        self.sprite?.runAction(moveAction)
     }
-
 }
